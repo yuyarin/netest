@@ -22,12 +22,12 @@ def class_test klass, test_data
 end
 	
 	class_test 'Ping', [
-		{size: 64,   host: '8.8.8.8', expect: "rtt < 100"},
-		{size: 1472, host: '8.8.8.8', expect: "rtt < 100"},
+		{size: 64,   host: '74.125.235.145', expect: "rtt<100"},
+		{size: 1472, host: '74.125.235.145', expect: "rtt<100"},
 	]
 	class_test 'Ping6', [
-		{size: 64,   host: '2404:6800:4004:804::1011', expect: "rtt < 100"},
-		{size: 1232, host: '2404:6800:4004:804::1011', expect: "rtt < 100"},
+		{size: 64,   host: '2404:6800:4004:804::1011', expect: "rtt<100"},
+		{size: 1232, host: '2404:6800:4004:804::1011', expect: "rtt<100"},
 	]
 	class_test 'Dig', [
 		{rr: 'A',    proto: 4, domain: 'www.google.com', expect: 'status=="NOERROR" and ans =~ /74.125/'},
