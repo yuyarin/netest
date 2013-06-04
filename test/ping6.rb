@@ -1,21 +1,22 @@
 
 class Ping6
-	attr_accessor :result
+	attr_accessor :result, :output
 	def initialize(host: "2001:380:6fc::4", size: 64, count: 3, expect: 'rtt < 100')
 		@host = host
 		@size = size.to_i
 		@count = count.to_i
 		@expect = expect
-		@result = ''
+		@result = false
+		@output = ''
 	end
 	def description
 		"PING IPv6 #{@host} with size #{@size}, expect #{@expect}"
 	end
-	def test
-		result = `ping6 -c #{@count} -i 3 -s #{@size} #{@host} 2>&1 | egrep "time"`
+	def do_test
+		output = `ping6 -c #{@count} -i 3 -s #{@size} #{@host} 2>&1 | egrep "time"`
 		success_count = 0
 		failed = false
-		result.each_line do |line|
+		output.each_line do |line|
 			if /time=([\d\.]+) ms/ =~ line
 				success_count += 1
 				rtt_s = $1
@@ -25,9 +26,9 @@ class Ping6
 					failed = true
 				end
 			end
-			@result += line
+			@output += line
 		end
-		success_count == @count and !failed
+		@result = (success_count == @count and !failed)
 	end
 end
 

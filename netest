@@ -1,39 +1,27 @@
 #!env ruby
 
-def test subject
-	print "  testing #{subject.description}..."
-	if subject.test
-		puts "\e[32m[OK]\e[0m"
-	else
-		puts "\e[31m[FAIL]\e[0m"
-	end
-	subject.result.each_line do |line|
-		puts "    #{line}"
-	end
-end
+sd = File.dirname($0)
+require sd+'/lib/Netest.rb'
+require sd+'/lib/NetestTarget.rb'
 
-def class_test klass, test_data
-	require "./lib/#{klass.downcase}.rb"
-	puts "#{klass} Test"
-	test_data.each do |test_datum|
-		eval "test #{klass}.new(#{test_datum})"
-	end
-	puts ""
+def print_usage
+	puts "usage: netest config_file"
 end
 	
-	class_test 'Ping', [
-		{size: 64,   host: '74.125.235.145', expect: "rtt<100"},
-		{size: 1472, host: '74.125.235.145', expect: "rtt<100"},
-	]
-	class_test 'Ping6', [
-		{size: 64,   host: '2404:6800:4004:804::1011', expect: "rtt<100"},
-		{size: 1232, host: '2404:6800:4004:804::1011', expect: "rtt<100"},
-	]
-	class_test 'Dig', [
-		{rr: 'A',    proto: 4, domain: 'www.google.com', expect: 'status=="NOERROR" and ans =~ /74.125/'},
-		{rr: 'AAAA', proto: 4, domain: 'www.google.com', expect: 'status=="NOERROR" and ans =~ /2404:6800:4004/'},
-	]
-	class_test 'Tcping', [
-		{host: 'www.google.com', proto: 4, port: 80, expect: 'status=="open" and rtt<100'},
-		{host: 'www.google.com', proto: 6, port: 80, expect: 'status=="open" and rtt<100'},
-	]
+	if ARGV.size < 1
+		print_usage
+		exit 1
+	end
+	
+	scenario_file = ARGV[0]
+	unless File.exists?(scenario_file)
+		puts "scenario file not found: #{scenario_file}"
+	end
+	
+	scenario = eval File.read(scenario_file)
+	
+	$semaphore = Mutex.new
+	netest = Netest.new
+	netest.load_scenario scenario
+	netest.do_test
+	
