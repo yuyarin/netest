@@ -1,4 +1,11 @@
 #!env ruby
+#
+#   Netest, a automated network test tool
+#   Copyright (c) 2013 yuyarin
+#
+#   netest
+#     executable script file which loads and perform netest a scenario
+#
 
 sd = File.dirname($0)
 require sd+'/lib/Netest.rb'

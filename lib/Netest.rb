@@ -1,3 +1,11 @@
+#
+#   Netest, a automated network test tool
+#   Copyright (c) 2013 yuyarin
+#
+#   class Netest
+#     an instance of this class handle one netest scenario and perform test
+#     for each test target in parallel
+#
 
 class Netest
 	
@@ -7,6 +15,7 @@ class Netest
 	end
 	
 	def load_scenario scenario
+		# TODO: validate scenario
 		@scenario = scenario
 	end
 	

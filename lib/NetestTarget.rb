@@ -1,3 +1,12 @@
+#
+#   Netest, a automated network test tool
+#   Copyright (c) 2013 yuyarin
+#
+#   class NetestTarget
+#     an instance of this class represents type of test
+#     and perform tests for each test case in parallel,
+#     then print out the results
+#
 
 class NetestTarget
 	
@@ -24,7 +33,7 @@ class NetestTarget
 		require "#{File.dirname($0)}/test/#{@target}.rb"
 		@test_cases.each do |test_case|
 			subject = Object.const_get(test_module).new(test_case)
-			puts subject.description
+		#	puts subject.description
 			test = {
 				subject: subject,
 				thread: nil,
