@@ -1,6 +1,9 @@
+
 class Tcping
+	
 	attr_accessor :result, :output
-	def initialize(host: "221.189.114.163", port: 80, proto: 4, expect: 'status=="open"')
+	
+	def initialize(host: "221.189.114.163", port: 80, proto: 4, expect: 'status=="open"', tcping: '/usr/local/bin/tcping')
 		@host = host
 		@port = port.to_i
 		raise "unknown IP version" unless ['4', '6', 4, 6].include?(proto)
@@ -8,12 +11,16 @@ class Tcping
 		@expect = expect
 		@result = false
 		@output = ''
+		raise "tcping does not exist, install https://sites.google.com/site/everythingonipv6/tcping-suppor-dual-stack into /usr/local/bin/tcping" unless File.exists? tcping
+		@tcping = tcping
 	end
+	
 	def description
 		"TCP PING IPv#{@proto} #{@host} #{@port}, expect #{@expect}"
 	end
+	
 	def do_test
-		output = `/Users/yuyarin/scripts/tcping -p#{@proto} #{@host} #{@port} 2>&1`
+		output = `#{@tcping} -t 1 -p#{@proto} #{@host} #{@port} 2>&1`
 		failed = false
 		status = ''
 		rtt = 0
@@ -29,3 +36,4 @@ class Tcping
 		@result = eval @expect
 	end
 end
+

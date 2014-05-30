@@ -1,5 +1,8 @@
+
 class Dig
+	
 	attr_accessor :rr, :proto, :domain, :result, :output
+	
 	def initialize(rr: "A", proto: 4, domain: 'www.yuyarin.net', expect: 'ans =~ /221.189.114.163/ and status == "NOERROR"')
 		raise "unknown RR: #{rr}" unless ['A', 'AAAA', 'NS', 'MX', 'PTR'].include?(rr)
 		@rr = rr
@@ -10,13 +13,15 @@ class Dig
 		@result = false
 		@output = ''
 	end
+	
 	def description
 		"Dig IPv#{@proto} #{@rr} #{@domain}, expect #{@expect}"
 	end
+	
 	def do_test
 		target = @rr
 		#target = '-x' if @rr == 'PTR'
-		@output = `dig -#{@proto} #{target} #{@domain} 2>&1 | egrep "#{@domain}|status"`
+		@output = `dig +time=1 +tries=1 -#{@proto} #{target} #{@domain} 2>&1 | egrep "#{@domain}|status"`
 		noerror = false
 		ans = ''
 		status = ''

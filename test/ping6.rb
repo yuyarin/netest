@@ -1,6 +1,8 @@
 
 class Ping6
+	
 	attr_accessor :result, :output
+	
 	def initialize(host: "2001:380:6fc::4", size: 64, count: 3, expect: 'rtt < 100')
 		@host = host
 		@size = size.to_i
@@ -9,9 +11,11 @@ class Ping6
 		@result = false
 		@output = ''
 	end
+	
 	def description
 		"PING IPv6 #{@host} with size #{@size}, expect #{@expect}"
 	end
+	
 	def do_test
 		output = `ping6 -c #{@count} -i 3 -s #{@size} #{@host} 2>&1 | egrep "time"`
 		success_count = 0

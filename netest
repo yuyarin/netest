@@ -1,4 +1,4 @@
-#!env ruby
+#!/usr/bin/env ruby
 #
 #   Netest, a automated network test tool
 #   Copyright (c) 2013 yuyarin
@@ -7,9 +7,10 @@
 #     executable script file which loads and perform netest a scenario
 #
 
-sd = File.dirname($0)
-require sd+'/lib/Netest.rb'
-require sd+'/lib/NetestTarget.rb'
+$: << File.expand_path('../lib', __FILE__)
+
+require 'netest'
+require 'netest_target'
 
 def print_usage
 	puts "usage: netest config_file"
