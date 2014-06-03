@@ -11,7 +11,7 @@ class Tcping
 		@expect = expect
 		@result = false
 		@output = ''
-		raise "tcping does not exist, install https://sites.google.com/site/everythingonipv6/tcping-suppor-dual-stack into /usr/local/bin/tcping" unless File.exists? tcping
+		raise "tcping does not exist, install it following README.md" unless File.exists? tcping
 		@tcping = tcping
 	end
 	
