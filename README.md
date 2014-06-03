@@ -18,15 +18,15 @@ Network test/diagonostic tool
 
 ## Download netest
 
-```git clone git@github.com:yuyarin/netest.git```
+```https://github.com/yuyarin/netest.git```
 
 ## Install tcping
 
-https://sites.google.com/site/everythingonipv6/tcping-suppor-dual-stack
-
-save this code and compile them.
-
-```sudo mv tcping /usr/local/bin/tcping```
+```
+cd src
+gcc -m32 tcping.c
+sudo cp a.out /usr/local/bin/tcping
+```
 
 ## How to use
 
