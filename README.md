@@ -18,7 +18,9 @@ Network test/diagonostic tool
 
 ## Download netest
 
-```https://github.com/yuyarin/netest.git```
+```
+https://github.com/yuyarin/netest.git
+```
 
 ## Install tcping
 
