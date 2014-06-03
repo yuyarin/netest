@@ -14,6 +14,10 @@ Network test/diagonostic tool
 - Mac OS X 10.6 or later
 - Ruby 2.0.0p247 or later
 
+## For Linux(Debian)
+
+- In test/ping.rb, change timeout option of ping command from -t to -W
+
 # Install
 
 ## Download netest
